@@ -9,6 +9,10 @@ import ros_numpy
 import matplotlib.pyplot as plt
 import cv2
 from geometry_msgs.msg import Point
+import tf2_ros
+import tf
+
+
 
 #write a class (use class attributes inside the callback)
 
@@ -79,6 +83,12 @@ def main():
 
     pub = rospy.Publisher("lolo/mbes/enu/featurePos", Odometry, queue_size=0)
     pub2 = rospy.Publisher("lolo/mbes/enu/featurePoints", Point, queue_size=0)
+
+    tfBuffer = tf2_ros.Buffer()
+    #trans = tfBuffer.lookup_transform('lolo/dr/odom', 'lolo/mbes/enu/bathy_cloud', rospy.Time())
+    trans = tfBuffer.lookup_transform('map', 'lolo/enu/mbes_link' , rospy.Time()) #'lolo/enu/mbes_link',
+    print('trans: ', trans)
+
     #print(pt2im.pt_array)
     iter = 0
 
